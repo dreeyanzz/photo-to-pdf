@@ -1,0 +1,89 @@
+.batch-actions {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 12px 20px;
+  margin-bottom: 24px;
+  transition: all 0.2s ease;
+}
+
+.batch-actions--active {
+  background: #f0f9ff;
+  border-color: #3b82f6;
+}
+
+.batch-actions__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.batch-actions__info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.batch-actions__count {
+  font-size: 14px;
+  font-weight: 600;
+  color: #3b82f6;
+}
+
+.batch-actions__clear-btn,
+.batch-actions__select-all-btn {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  font-size: 13px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+
+.batch-actions__clear-btn:hover,
+.batch-actions__select-all-btn:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.batch-actions__buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.batch-actions__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  color: #374151;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.batch-actions__btn:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.batch-actions__btn--danger {
+  color: #dc2626;
+  border-color: #fecaca;
+}
+
+.batch-actions__btn--danger:hover {
+  background: #fef2f2;
+  border-color: #fca5a5;
+}
+
+.batch-actions__btn svg {
+  flex-shrink: 0;
+}

@@ -15,6 +15,7 @@ export function createPhotoObject(file) {
           crop: null,
           width: img.width,
           height: img.height,
+          fileSize: file.size,
         });
       };
       img.onerror = reject;
@@ -23,6 +24,22 @@ export function createPhotoObject(file) {
     reader.onerror = reject;
     reader.readAsDataURL(file);
   });
+}
+
+export function duplicatePhoto(photo) {
+  return {
+    ...photo,
+    id: `photo-${nextId++}`,
+    name: `${photo.name} (copy)`,
+  };
+}
+
+export function formatFileSize(bytes) {
+  if (bytes === 0) return '0 Bytes';
+  const k = 1024;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
 }
 
 export function getCroppedImg(imageSrc, pixelCrop) {

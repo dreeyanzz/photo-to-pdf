@@ -14,7 +14,16 @@ import {
 import PhotoCard from './PhotoCard';
 import './PhotoGrid.css';
 
-export default function PhotoGrid({ photos, onReorder, onRotate, onCrop, onDelete }) {
+export default function PhotoGrid({ 
+  photos, 
+  selectedIds, 
+  onReorder, 
+  onRotate, 
+  onCrop, 
+  onDelete, 
+  onDuplicate, 
+  onToggleSelect 
+}) {
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: { distance: 5 },
@@ -60,9 +69,12 @@ export default function PhotoGrid({ photos, onReorder, onRotate, onCrop, onDelet
                 key={photo.id}
                 photo={photo}
                 index={index}
+                isSelected={selectedIds.has(photo.id)}
                 onRotate={onRotate}
                 onCrop={onCrop}
                 onDelete={onDelete}
+                onDuplicate={onDuplicate}
+                onToggleSelect={onToggleSelect}
               />
             ))}
           </div>

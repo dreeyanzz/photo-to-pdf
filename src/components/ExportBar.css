@@ -42,6 +42,29 @@
   letter-spacing: 0.05em;
 }
 
+.export-bar__input {
+  appearance: none;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-family: inherit;
+  transition: all var(--transition-fast);
+  min-width: 180px;
+}
+
+.export-bar__input:hover {
+  border-color: var(--accent);
+}
+
+.export-bar__input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-subtle);
+}
+
 .export-bar__select {
   appearance: none;
   background: var(--bg-secondary);

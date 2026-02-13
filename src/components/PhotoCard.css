@@ -3,7 +3,7 @@
   background: var(--bg-card);
   border-radius: var(--radius-md);
   overflow: hidden;
-  border: 1px solid var(--border);
+  border: 2px solid var(--border);
   transition: all var(--transition-normal);
   animation: scaleIn var(--transition-normal) ease-out;
   display: flex;
@@ -16,16 +16,38 @@
   transform: translateY(-2px);
 }
 
+.photo-card--selected {
+  border-color: var(--accent);
+  background: var(--accent-subtle);
+}
+
 .photo-card--dragging {
   box-shadow: var(--shadow-lg), var(--shadow-glow);
   border-color: var(--accent);
+  transform: scale(1.05) rotate(2deg);
+  opacity: 0.9;
+}
+
+/* Checkbox */
+.photo-card__checkbox-wrapper {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 6;
+}
+
+.photo-card__checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--accent);
 }
 
 /* Drag handle */
 .photo-card__drag-handle {
   position: absolute;
   top: 8px;
-  left: 8px;
+  left: 34px;
   z-index: 5;
   cursor: grab;
   color: var(--text-muted);
@@ -87,7 +109,7 @@
   padding: 10px 12px 4px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
 }
 
 .photo-card__name {
@@ -99,7 +121,25 @@
   text-overflow: ellipsis;
 }
 
+.photo-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
 .photo-card__dimensions {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.photo-card__separator {
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+.photo-card__filesize {
   font-size: 0.7rem;
   color: var(--text-muted);
 }
@@ -134,4 +174,9 @@
 .photo-card__btn--delete:hover {
   background: rgba(239, 68, 68, 0.15);
   color: var(--danger-hover);
+}
+
+.photo-card__btn--duplicate:hover {
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--accent-hover);
 }

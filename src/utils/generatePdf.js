@@ -53,7 +53,7 @@ function applyTransformToCanvas(dataUrl, rotation, cropData) {
   });
 }
 
-export async function generatePdf(photos, pageSize = 'match', onProgress) {
+export async function generatePdf(photos, pageSize = 'match', filename = 'photos', onProgress) {
   if (photos.length === 0) return;
 
   let doc = null;
@@ -123,5 +123,10 @@ export async function generatePdf(photos, pageSize = 'match', onProgress) {
   }
 
   if (onProgress) onProgress(photos.length, photos.length);
-  doc.save('photos.pdf');
+  
+  // Clean filename - remove invalid characters and add .pdf extension if needed
+  const cleanFilename = filename.replace(/[<>:"/\\|?*]/g, '').trim() || 'photos';
+  const finalFilename = cleanFilename.endsWith('.pdf') ? cleanFilename : `${cleanFilename}.pdf`;
+  
+  doc.save(finalFilename);
 }

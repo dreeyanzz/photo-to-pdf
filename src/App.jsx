@@ -4,12 +4,14 @@ import UploadZone from './components/UploadZone';
 import PhotoGrid from './components/PhotoGrid';
 import CropModal from './components/CropModal';
 import ExportBar from './components/ExportBar';
-import { createPhotoObject, getCroppedImg } from './utils/imageHelpers';
+import BatchActions from './components/BatchActions';
+import { createPhotoObject, getCroppedImg, duplicatePhoto } from './utils/imageHelpers';
 import { generatePdf } from './utils/generatePdf';
 import './App.css';
 
 function App() {
   const [photos, setPhotos] = useState([]);
+  const [selectedIds, setSelectedIds] = useState(new Set());
   const [cropTarget, setCropTarget] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [progress, setProgress] = useState(null);
@@ -78,22 +80,81 @@ function App() {
   // Delete
   const handleDelete = useCallback((id) => {
     setPhotos((prev) => prev.filter((p) => p.id !== id));
+    setSelectedIds((prev) => {
+      const newSet = new Set(prev);
+      newSet.delete(id);
+      return newSet;
+    });
+  }, []);
+
+  // Duplicate
+  const handleDuplicate = useCallback((id) => {
+    setPhotos((prev) => {
+      const index = prev.findIndex((p) => p.id === id);
+      if (index === -1) return prev;
+      const photo = prev[index];
+      const duplicated = duplicatePhoto(photo);
+      return [...prev.slice(0, index + 1), duplicated, ...prev.slice(index + 1)];
+    });
+  }, []);
+
+  // Toggle selection
+  const handleToggleSelect = useCallback((id) => {
+    setSelectedIds((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(id)) {
+        newSet.delete(id);
+      } else {
+        newSet.add(id);
+      }
+      return newSet;
+    });
+  }, []);
+
+  // Batch rotate selected
+  const handleBatchRotate = useCallback((degrees) => {
+    if (selectedIds.size === 0) return;
+    setPhotos((prev) =>
+      prev.map((p) => {
+        if (!selectedIds.has(p.id)) return p;
+        const newRotation = ((p.rotation || 0) + degrees + 360) % 360;
+        return { ...p, rotation: newRotation };
+      })
+    );
+  }, [selectedIds]);
+
+  // Batch delete selected
+  const handleBatchDelete = useCallback(() => {
+    if (selectedIds.size === 0) return;
+    setPhotos((prev) => prev.filter((p) => !selectedIds.has(p.id)));
+    setSelectedIds(new Set());
+  }, [selectedIds]);
+
+  // Select all
+  const handleSelectAll = useCallback(() => {
+    setSelectedIds(new Set(photos.map((p) => p.id)));
+  }, [photos]);
+
+  // Clear selection
+  const handleClearSelection = useCallback(() => {
+    setSelectedIds(new Set());
   }, []);
 
   // Clear all
   const handleClearAll = useCallback(() => {
     setPhotos([]);
+    setSelectedIds(new Set());
   }, []);
 
   // Generate PDF
   const handleGenerate = useCallback(
-    async (pageSize) => {
+    async (pageSize, filename) => {
       if (photos.length === 0) return;
       setIsGenerating(true);
       setProgress({ current: 0, total: photos.length });
 
       try {
-        await generatePdf(photos, pageSize, (current, total) => {
+        await generatePdf(photos, pageSize, filename, (current, total) => {
           setProgress({ current, total });
         });
       } catch (err) {
@@ -141,12 +202,29 @@ function App() {
       <main className="app__main">
         <div className="app__container">
           <UploadZone onFilesSelected={handleFilesSelected} />
+          
+          {/* Batch actions bar */}
+          {photos.length > 0 && (
+            <BatchActions
+              selectedCount={selectedIds.size}
+              totalCount={photos.length}
+              onSelectAll={handleSelectAll}
+              onClearSelection={handleClearSelection}
+              onRotateLeft={() => handleBatchRotate(-90)}
+              onRotateRight={() => handleBatchRotate(90)}
+              onDeleteSelected={handleBatchDelete}
+            />
+          )}
+          
           <PhotoGrid
             photos={photos}
+            selectedIds={selectedIds}
             onReorder={handleReorder}
             onRotate={handleRotate}
             onCrop={handleCropOpen}
             onDelete={handleDelete}
+            onDuplicate={handleDuplicate}
+            onToggleSelect={handleToggleSelect}
           />
         </div>
       </main>

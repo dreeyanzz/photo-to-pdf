@@ -1,8 +1,18 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { formatFileSize } from '../utils/imageHelpers';
 import './PhotoCard.css';
 
-export default function PhotoCard({ photo, onRotate, onCrop, onDelete, index }) {
+export default function PhotoCard({ 
+  photo, 
+  index, 
+  isSelected, 
+  onRotate, 
+  onCrop, 
+  onDelete, 
+  onDuplicate, 
+  onToggleSelect 
+}) {
   const {
     attributes,
     listeners,
@@ -28,9 +38,19 @@ export default function PhotoCard({ photo, onRotate, onCrop, onDelete, index }) 
     <div
       ref={setNodeRef}
       style={style}
-      className={`photo-card ${isDragging ? 'photo-card--dragging' : ''}`}
+      className={`photo-card ${isDragging ? 'photo-card--dragging' : ''} ${isSelected ? 'photo-card--selected' : ''}`}
       id={`photo-card-${photo.id}`}
     >
+      {/* Selection checkbox */}
+      <div className="photo-card__checkbox-wrapper">
+        <input
+          type="checkbox"
+          className="photo-card__checkbox"
+          checked={isSelected}
+          onChange={() => onToggleSelect(photo.id)}
+        />
+      </div>
+
       {/* Drag handle */}
       <div className="photo-card__drag-handle" {...attributes} {...listeners}>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -62,9 +82,19 @@ export default function PhotoCard({ photo, onRotate, onCrop, onDelete, index }) 
         <span className="photo-card__name" title={photo.name}>
           {photo.name}
         </span>
-        <span className="photo-card__dimensions">
-          {photo.width} × {photo.height}
-        </span>
+        <div className="photo-card__meta">
+          <span className="photo-card__dimensions">
+            {photo.width} × {photo.height}
+          </span>
+          {photo.fileSize && (
+            <>
+              <span className="photo-card__separator">•</span>
+              <span className="photo-card__filesize">
+                {formatFileSize(photo.fileSize)}
+              </span>
+            </>
+          )}
+        </div>
       </div>
 
       {/* Actions */}
@@ -97,6 +127,16 @@ export default function PhotoCard({ photo, onRotate, onCrop, onDelete, index }) 
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M6.13 1L6 16a2 2 0 002 2h15" />
             <path d="M1 6.13L16 6a2 2 0 012 2v15" />
+          </svg>
+        </button>
+        <button
+          className="photo-card__btn photo-card__btn--duplicate"
+          onClick={() => onDuplicate(photo.id)}
+          title="Duplicate"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
           </svg>
         </button>
         <button

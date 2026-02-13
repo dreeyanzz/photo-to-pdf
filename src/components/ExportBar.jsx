@@ -3,9 +3,10 @@ import './ExportBar.css';
 
 export default function ExportBar({ photoCount, onGenerate, isGenerating, progress }) {
   const [pageSize, setPageSize] = useState('match');
+  const [filename, setFilename] = useState('photos');
 
   const handleGenerate = () => {
-    onGenerate(pageSize);
+    onGenerate(pageSize, filename);
   };
 
   const progressPercent = progress
@@ -17,6 +18,20 @@ export default function ExportBar({ photoCount, onGenerate, isGenerating, progre
       <div className="export-bar__inner">
         {/* Left: settings */}
         <div className="export-bar__settings">
+          <div className="export-bar__setting">
+            <label className="export-bar__label" htmlFor="filename-input">
+              Filename
+            </label>
+            <input
+              id="filename-input"
+              type="text"
+              className="export-bar__input"
+              value={filename}
+              onChange={(e) => setFilename(e.target.value)}
+              disabled={isGenerating}
+              placeholder="photos"
+            />
+          </div>
           <div className="export-bar__setting">
             <label className="export-bar__label" htmlFor="page-size-select">
               Page Size
