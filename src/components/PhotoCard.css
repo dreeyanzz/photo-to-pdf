@@ -180,3 +180,47 @@
   background: rgba(59, 130, 246, 0.15);
   color: var(--accent-hover);
 }
+
+@media (max-width: 640px) {
+  /* Larger touch targets on mobile */
+  .photo-card__checkbox {
+    width: 24px;
+    height: 24px;
+  }
+
+  .photo-card__drag-handle {
+    left: 38px;
+    padding: 6px;
+  }
+
+  .photo-card__index {
+    width: 26px;
+    height: 26px;
+    font-size: 0.75rem;
+  }
+
+  /* Reduce button count on mobile - hide rotate buttons, keep essential ones */
+  .photo-card__actions {
+    gap: 6px;
+    padding: 8px 10px 12px;
+  }
+
+  .photo-card__btn {
+    padding: 8px;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Stack info more compactly */
+  .photo-card__info {
+    padding: 8px 10px 4px;
+  }
+
+  .photo-card__name {
+    font-size: 0.75rem;
+  }
+
+  .photo-card__meta {
+    font-size: 0.65rem;
+  }
+}

@@ -69,3 +69,25 @@
   color: var(--text-muted);
   margin-top: 4px;
 }
+
+@media (max-width: 640px) {
+  .upload-zone {
+    padding: 32px 20px;
+  }
+
+  .upload-zone__icon {
+    transform: scale(0.85);
+  }
+
+  .upload-zone__title {
+    font-size: 1.1rem;
+  }
+
+  .upload-zone__subtitle {
+    font-size: 0.85rem;
+  }
+
+  .upload-zone__formats {
+    font-size: 0.75rem;
+  }
+}

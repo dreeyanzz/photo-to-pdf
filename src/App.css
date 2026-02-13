@@ -102,14 +102,42 @@
 @media (max-width: 640px) {
   .app__header-inner {
     padding: 12px 16px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .app__logo {
+    gap: 10px;
+  }
+
+  .app__logo-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .app__title {
+    font-size: 1.1rem;
+  }
+
+  .app__subtitle {
+    font-size: 0.75rem;
+  }
+
+  .app__clear-btn {
+    padding: 8px 12px;
+    font-size: 0.75rem;
   }
 
   .app__container {
     padding: 0 16px;
-    gap: 24px;
+    gap: 20px;
   }
 
   .app__main {
     padding: 20px 0;
+  }
+
+  .app__export-wrapper {
+    padding-bottom: 12px;
   }
 }

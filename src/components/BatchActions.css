@@ -87,3 +87,32 @@
 .batch-actions__btn svg {
   flex-shrink: 0;
 }
+
+@media (max-width: 640px) {
+  .batch-actions {
+    padding: 12px 16px;
+  }
+
+  .batch-actions__inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .batch-actions__info {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .batch-actions__buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .batch-actions__btn {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+}

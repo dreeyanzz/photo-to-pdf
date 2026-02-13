@@ -133,3 +133,28 @@ body {
 .animate-slide-up {
   animation: slideUp var(--transition-slow) ease-out;
 }
+
+/* Mobile-specific optimizations */
+@media (max-width: 640px) {
+  /* Prevent text selection during dragging */
+  .photo-card__drag-handle {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Better tap highlight */
+  button, a, input[type="checkbox"] {
+    -webkit-tap-highlight-color: rgba(99, 102, 241, 0.2);
+  }
+
+  /* Smoother scrolling on mobile */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Prevent zoom on input focus */
+  input, select, textarea {
+    font-size: 16px;
+  }
+}
