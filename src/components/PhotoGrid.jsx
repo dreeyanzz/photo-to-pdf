@@ -14,6 +14,7 @@ import {
 } from '@dnd-kit/sortable';
 import { useState } from 'react';
 import PhotoCard from './PhotoCard';
+import ViewToggle from './ViewToggle';
 import './PhotoGrid.css';
 
 export default function PhotoGrid({ 
@@ -24,7 +25,9 @@ export default function PhotoGrid({
   onCrop, 
   onDelete, 
   onDuplicate, 
-  onToggleSelect 
+  onToggleSelect,
+  view,
+  onViewChange
 }) {
   const [activeId, setActiveId] = useState(null);
   
@@ -70,7 +73,10 @@ export default function PhotoGrid({
           </svg>
           Your Photos
         </h2>
-        <span className="photo-grid-header__count">{photos.length} photo{photos.length !== 1 ? 's' : ''}</span>
+        <div className="photo-grid-header__actions">
+          <ViewToggle currentView={view} onViewChange={onViewChange} />
+          <span className="photo-grid-header__count">{photos.length} photo{photos.length !== 1 ? 's' : ''}</span>
+        </div>
       </div>
 
       <DndContext
@@ -81,7 +87,7 @@ export default function PhotoGrid({
         onDragCancel={handleDragCancel}
       >
         <SortableContext items={photos.map((p) => p.id)} strategy={rectSortingStrategy}>
-          <div className="photo-grid" id="photo-grid">
+          <div className={`photo-grid photo-grid--${view}`} id="photo-grid">
             {photos.map((photo, index) => (
               <PhotoCard
                 key={photo.id}
@@ -93,6 +99,7 @@ export default function PhotoGrid({
                 onDelete={onDelete}
                 onDuplicate={onDuplicate}
                 onToggleSelect={onToggleSelect}
+                viewMode={view}
               />
             ))}
           </div>

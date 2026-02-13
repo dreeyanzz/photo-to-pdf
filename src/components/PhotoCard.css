@@ -42,11 +42,70 @@
   pointer-events: none;
 }
 
+/* List View Layout */
+.photo-card--list {
+  flex-direction: row;
+  height: auto;
+}
+
+.photo-card--list .photo-card__thumbnail-wrapper {
+  width: 120px;
+  min-width: 120px;
+  aspect-ratio: 1;
+  flex-shrink: 0;
+}
+
+.photo-card--list .photo-card__info {
+  flex: 1;
+  padding: 12px 16px;
+  justify-content: center;
+}
+
+.photo-card--list .photo-card__actions {
+  flex-direction: column;
+  padding: 12px;
+  gap: 6px;
+}
+
+.photo-card--list .photo-card__btn {
+  width: 100%;
+  justify-content: center;
+}
+
+.photo-card--list .photo-card__drag-handle {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.photo-card--list .photo-card__checkbox-wrapper {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.photo-card--list .photo-card__index {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 @media (max-width: 640px) {
   .photo-card--overlay {
     width: 140px;
     transform: scale(1.08) rotate(4deg);
   }
+
+  .photo-card--list .photo-card__thumbnail-wrapper {
+    width: 100px;
+    min-width: 100px;
+  }
+
+  .photo-card--list .photo-card__info {
+    padding: 10px 12px;
+  }
+
+  .photo-card--list .photo-card__actions {
+    padding: 10px;
+  }
+}
 }
 
 /* Checkbox */

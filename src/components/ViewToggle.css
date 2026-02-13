@@ -1,0 +1,36 @@
+.view-toggle {
+  display: flex;
+  gap: 4px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 4px;
+}
+
+.view-toggle__btn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  padding: 6px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.view-toggle__btn:hover {
+  background: var(--accent-subtle);
+  color: var(--text-primary);
+}
+
+.view-toggle__btn--active {
+  background: var(--accent);
+  color: white;
+}
+
+.view-toggle__btn--active:hover {
+  background: var(--accent-hover);
+}

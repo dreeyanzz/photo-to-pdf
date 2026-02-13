@@ -15,6 +15,7 @@ function App() {
   const [cropTarget, setCropTarget] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [progress, setProgress] = useState(null);
+  const [view, setView] = useState('medium');
 
   // Handle new files
   const handleFilesSelected = useCallback(async (files) => {
@@ -140,6 +141,11 @@ function App() {
     setSelectedIds(new Set());
   }, []);
 
+  // Handle view change
+  const handleViewChange = useCallback((newView) => {
+    setView(newView);
+  }, []);
+
   // Clear all
   const handleClearAll = useCallback(() => {
     setPhotos([]);
@@ -225,6 +231,8 @@ function App() {
             onDelete={handleDelete}
             onDuplicate={handleDuplicate}
             onToggleSelect={handleToggleSelect}
+            view={view}
+            onViewChange={handleViewChange}
           />
         </div>
       </main>

@@ -11,7 +11,8 @@ export default function PhotoCard({
   onCrop, 
   onDelete, 
   onDuplicate, 
-  onToggleSelect 
+  onToggleSelect,
+  viewMode = 'medium'
 }) {
   const {
     attributes,
@@ -37,7 +38,7 @@ export default function PhotoCard({
     <div
       ref={setNodeRef}
       style={style}
-      className={`photo-card ${isDragging ? 'photo-card--dragging' : ''} ${isSelected ? 'photo-card--selected' : ''}`}
+      className={`photo-card photo-card--${viewMode} ${isDragging ? 'photo-card--dragging' : ''} ${isSelected ? 'photo-card--selected' : ''}`}
       id={`photo-card-${photo.id}`}
     >
       {/* Selection checkbox */}
