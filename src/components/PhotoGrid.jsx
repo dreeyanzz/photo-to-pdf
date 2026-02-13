@@ -5,12 +5,14 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
+  DragOverlay,
 } from '@dnd-kit/core';
 import {
   SortableContext,
   sortableKeyboardCoordinates,
   rectSortingStrategy,
 } from '@dnd-kit/sortable';
+import { useState } from 'react';
 import PhotoCard from './PhotoCard';
 import './PhotoGrid.css';
 
@@ -24,6 +26,8 @@ export default function PhotoGrid({
   onDuplicate, 
   onToggleSelect 
 }) {
+  const [activeId, setActiveId] = useState(null);
+  
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: { distance: 5 },
@@ -33,12 +37,24 @@ export default function PhotoGrid({
     })
   );
 
+  const handleDragStart = (event) => {
+    setActiveId(event.active.id);
+  };
+
   const handleDragEnd = (event) => {
     const { active, over } = event;
     if (active.id !== over?.id) {
       onReorder(active.id, over.id);
     }
+    setActiveId(null);
   };
+
+  const handleDragCancel = () => {
+    setActiveId(null);
+  };
+
+  const activePhoto = photos.find(p => p.id === activeId);
+  const activeIndex = photos.findIndex(p => p.id === activeId);
 
   if (photos.length === 0) return null;
 
@@ -60,7 +76,9 @@ export default function PhotoGrid({
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
+        onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
+        onDragCancel={handleDragCancel}
       >
         <SortableContext items={photos.map((p) => p.id)} strategy={rectSortingStrategy}>
           <div className="photo-grid" id="photo-grid">
@@ -79,6 +97,22 @@ export default function PhotoGrid({
             ))}
           </div>
         </SortableContext>
+        <DragOverlay dropAnimation={null}>
+          {activePhoto ? (
+            <div className="photo-card photo-card--overlay">
+              <div className="photo-card__index">{activeIndex + 1}</div>
+              <div className="photo-card__thumbnail-wrapper">
+                <img
+                  src={activePhoto.editedDataUrl || activePhoto.originalDataUrl}
+                  alt={activePhoto.name}
+                  className="photo-card__thumbnail"
+                  style={{ transform: `rotate(${activePhoto.rotation || 0}deg)` }}
+                  draggable={false}
+                />
+              </div>
+            </div>
+          ) : null}
+        </DragOverlay>
       </DndContext>
     </div>
   );

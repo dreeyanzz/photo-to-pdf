@@ -24,8 +24,7 @@ export default function PhotoCard({
 
   const style = {
     transform: CSS.Transform.toString(transform),
-    transition,
-    opacity: isDragging ? 0.5 : 1,
+    transition: isDragging ? 'none' : transition,
     zIndex: isDragging ? 100 : 'auto',
   };
 

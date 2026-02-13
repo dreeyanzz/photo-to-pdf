@@ -22,10 +22,31 @@
 }
 
 .photo-card--dragging {
-  box-shadow: var(--shadow-lg), var(--shadow-glow);
+  box-shadow: var(--shadow-lg), var(--shadow-glow), 0 20px 50px rgba(0, 0, 0, 0.6);
   border-color: var(--accent);
-  transform: scale(1.05) rotate(2deg);
-  opacity: 0.9;
+  opacity: 0.4;
+  cursor: grabbing;
+  /* Disable transitions during drag for smoother movement */
+  transition: none !important;
+  z-index: 1000;
+}
+
+/* Custom drag overlay styling */
+.photo-card--overlay {
+  box-shadow: var(--shadow-lg), var(--shadow-glow), 0 25px 60px rgba(0, 0, 0, 0.7);
+  border-color: var(--accent);
+  cursor: grabbing;
+  transform: scale(1.1) rotate(5deg);
+  background: var(--bg-card-hover);
+  width: 180px;
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .photo-card--overlay {
+    width: 140px;
+    transform: scale(1.08) rotate(4deg);
+  }
 }
 
 /* Checkbox */
